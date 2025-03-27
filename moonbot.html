@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Estate 🚀 | Real Estate Memecoin Launchpad</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script src="https://unpkg.com/marked@4.0.2/marked.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Press+Start+2P&display=swap');
+        
+        :root {
+            --primary: #5D5CDE;
+            --secondary: #FF6B6B;
+            --accent: #FFE66D;
+            --success: #4CD964;
+            --bg-light: #FFFFFF;
+            --bg-dark: #181818;
+            --text-light: #333333;
+            --text-dark: #F0F0F0;
+        }
+
+        .font-comic {
+            font-family: 'Comic Neue', cursive;
+        }
+
+        .font-pixel {
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .terminal {
+            background-color: #1a1a1a;
+            border: 2px solid #4CD964;
+            box-shadow: 0 0 20px rgba(76, 217, 100, 0.5);
+            font-family: 'Courier New', monospace;
+        }
+
+        .moon-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .pixel-border {
+            box-shadow: 0 0 0 3px #000, 
+                        0 0 0 6px var(--accent);
+        }
+
+        .rainbow-text {
+            background-image: linear-gradient(to right, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 8s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .retro-bg {
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(93, 92, 222, 0.1),
+                rgba(93, 92, 222, 0.1) 10px,
+                rgba(93, 92, 222, 0.2) 10px,
+                rgba(93, 92, 222, 0.2) 20px
+            );
+        }
+
+        /* Dark mode */
+        .dark {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+        
+        .dark .bg-white {
+            background-color: #252525;
+        }
+        
+        .dark .text-gray-800 {
+            color: #E0E0E0;
+        }
+        
+        .dark .text-gray-600 {
+            color: #B0B0B0;
+        }
+        
+        .dark .border-gray-200 {
+            border-color: #333333;
+        }
+        
+        .dark .property-card {
+            background-color: #252525;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+        }
+
+        #terminal-output {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        #terminal-output p {
+            margin-bottom: 8px;
+        }
+        
+        .typing-animation::after {
+            content: "|";
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .property-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .progress-bar {
+            transition: width 1s ease-in-out;
+        }
+
+        .flicker {
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body class="font-comic">
+    <div class="relative min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <i class="fas fa-moon text-white text-3xl mr-2 moon-animation"></i>
+                        <span class="font-pixel text-white text-xl tracking-tight">MOON ESTATE</span>
+                    </div>
+                    <div class="flex items-center">
+                        <button id="theme-toggle" class="p-2 rounded-full text-white hover:bg-purple-600 focus:outline-none">
+                            <i class="fas fa-sun dark:hidden"></i>
+                            <i class="fas fa-moon hidden dark:block"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header Banner -->
+        <div class="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 p-4 text-center text-white retro-bg">
+            <h1 class="text-2xl md:text-3xl font-bold font-pixel mb-2">🏡 REAL ESTATE TO THE MOON! 🚀</h1>
+            <p class="text-lg">Own a slice of premium property like it's a meme coin! Get in early, HODL, and moon!</p>
+            <div class="mt-2">
+                <span class="inline-block px-3 py-1 bg-green-500 text-white text-sm font-semibold rounded-full mr-2">
+                    <i class="fas fa-chart-line mr-1"></i> 24H VOLUME: $4.2M
+                </span>
+                <span class="inline-block px-3 py-1 bg-blue-500 text-white text-sm font-semibold rounded-full">
+                    <i class="fas fa-users mr-1"></i> 69,420 HODLERS
+                </span>
+            </div>
+            <div class="mt-4 flex justify-center space-x-4">
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-full font-bold transition flex items-center">
+                    <i class="fas fa-plus-circle mr-2"></i> List My Property
+                </button>
+                <button class="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-full font-bold transition flex items-center">
+                    <i class="fas fa-gift mr-2"></i> Giveaways
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <!-- Market Analysis Section -->
+            <div class="mb-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-4 font-pixel text-center">AI MARKET ANALYSIS 🤖</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-green-100 dark:bg-green-900 rounded-lg p-4">
+                        <h3 class="font-bold mb-2">Market Sentiment</h3>
+                        <p class="text-green-600 dark:text-green-400">BULLISH 🚀</p>
+                        <p class="text-sm mt-2">AI suggests holding for 30% potential gain</p>
+                    </div>
+                    <div class="bg-blue-100 dark:bg-blue-900 rounded-lg p-4">
+                        <h3 class="font-bold mb-2">Community Votes</h3>
+                        <p class="text-blue-600 dark:text-blue-400">HOLD: 78%</p>
+                        <p class="text-sm mt-2">Based on 1,234 community votes</p>
+                    </div>
+                    <div class="bg-purple-100 dark:bg-purple-900 rounded-lg p-4">
+                        <h3 class="font-bold mb-2">Market Trends</h3>
+                        <p class="text-purple-600 dark:text-purple-400">UPWARD 📈</p>
+                        <p class="text-sm mt-2">30-day trend analysis</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Properties Section -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold mb-4 font-pixel text-center rainbow-text">HOT LAUNCHES 🔥</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Dubai Apartment Card -->
+                    <div class="property-card rounded-lg shadow-lg overflow-hidden border-4 border-yellow-400" data-property="dubai">
+                        <div class="relative">
+                            <div class="h-48 bg-gradient-to-br from-yellow-200 to-yellow-500 flex items-center justify-center">
+                                <i class="fas fa-building text-white text-7xl"></i>
+                            </div>
+                            <div class="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded font-bold text-sm">
+                                $DUBAI
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-3">
+                                <div class="text-white font-bold">Luxury Apartment in Dubai</div>
+                                <div class="text-yellow-300 text-sm">Palm Jumeirah - 3 Bed</div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between">
+                                <div>
+                                    <p class="text-gray-600">Price Wanted</p>
+                                    <p class="font-bold text-xl">$1,500,000</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Funding</p>
+                                    <p class="font-bold text-green-500">78% Complete</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full progress-bar" style="width: 78%"></div>
+                            </div>
+                            <div class="mt-4 flex justify-center">
+                                <button class="view-property-btn bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-full font-bold transition">
+                                    <i class="fas fa-rocket mr-2"></i> MOON NOW
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paris House Card -->
+                    <div class="property-card rounded-lg shadow-lg overflow-hidden border-4 border-blue-400" data-property="paris">
+                        <div class="relative">
+                            <div class="h-48 bg-gradient-to-br from-blue-200 to-blue-500 flex items-center justify-center">
+                                <i class="fas fa-home text-white text-7xl"></i>
+                            </div>
+                            <div class="absolute top-2 right-2 bg-blue-500 text-white px-2 py-1 rounded font-bold text-sm">
+                                $PARIS
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-3">
+                                <div class="text-white font-bold">Charming House in Paris</div>
+                                <div class="text-blue-300 text-sm">Le Marais - 4 Bed</div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between">
+                                <div>
+                                    <p class="text-gray-600">Price Wanted</p>
+                                    <p class="font-bold text-xl">$2,800,000</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Funding</p>
+                                    <p class="font-bold text-yellow-500">42% Complete</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-yellow-500 h-2.5 rounded-full progress-bar" style="width: 42%"></div>
+                            </div>
+                            <div class="mt-4 flex justify-center">
+                                <button class="view-property-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full font-bold transition">
+                                    <i class="fas fa-rocket mr-2"></i> MOON NOW
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phnom Penh Building Card -->
+                    <div class="property-card rounded-lg shadow-lg overflow-hidden border-4 border-purple-400" data-property="phnompenh">
+                        <div class="relative">
+                            <div class="h-48 bg-gradient-to-br from-purple-200 to-purple-500 flex items-center justify-center">
+                                <i class="fas fa-city text-white text-7xl"></i>
+                            </div>
+                            <div class="absolute top-2 right-2 bg-purple-500 text-white px-2 py-1 rounded font-bold text-sm">
+                                $PENH
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-3">
+                                <div class="text-white font-bold">Building in Phnom Penh</div>
+                                <div class="text-purple-300 text-sm">Riverside Area - 12 Units</div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between">
+                                <div>
+                                    <p class="text-gray-600">Price Wanted</p>
+                                    <p class="font-bold text-xl">$850,000</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Funding</p>
+                                    <p class="font-bold text-red-500">15% Complete</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-red-500 h-2.5 rounded-full progress-bar" style="width: 15%"></div>
+                            </div>
+                            <div class="mt-4 flex justify-center">
+                                <button class="view-property-btn bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-full font-bold transition">
+                                    <i class="fas fa-rocket mr-2"></i> MOON NOW
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property Detail View (Hidden initially) -->
+            <div id="property-detail" class="hidden">
+                <div class="py-4">
+                    <button id="back-button" class="flex items-center text-indigo-600 hover:text-indigo-800">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to listings
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Property Info -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 id="property-title" class="text-2xl font-bold font-pixel"></h2>
+                                <div id="property-ticker" class="px-3 py-1 rounded-full text-white font-bold"></div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <h3 class="text-lg font-bold mb-2">Property Description</h3>
+                                <p id="property-description" class="text-gray-600 dark:text-gray-300"></p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 text-center">
+                                    <p class="text-gray-500 text-sm">Size</p>
+                                    <p id="property-size" class="font-bold text-lg"></p>
+                                </div>
+                                <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 text-center">
+                                    <p class="text-gray-500 text-sm">Bedrooms</p>
+                                    <p id="property-bedrooms" class="font-bold text-lg"></p>
+                                </div>
+                                <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 text-center">
+                                    <p class="text-gray-500 text-sm">Bathrooms</p>
+                                    <p id="property-bathrooms" class="font-bold text-lg"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Funding & Offers -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+                            <h3 class="text-xl font-bold mb-4">Funding Status</h3>
+                            <div class="mb-4">
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-bold">Goal:</span>
+                                    <span id="funding-goal" class="font-bold"></span>
+                                </div>
+                                <div class="flex justify-between mb-1">
+                                    <span>Raised:</span>
+                                    <span id="funding-raised"></span>
+                                </div>
+                                <div class="flex justify-between mb-1">
+                                    <span>Investors:</span>
+                                    <span id="funding-investors"></span>
+                                </div>
+                                <div class="flex justify-between mb-3">
+                                    <span>Time left:</span>
+                                    <span id="funding-time" class="text-red-500 font-bold"></span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
+                                    <div id="funding-progress" class="bg-green-500 h-4 rounded-full text-xs text-white text-center leading-4"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <button class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-bold mb-2 transition">
+                                    <i class="fas fa-rocket mr-2"></i> INVEST NOW
+                                </button>
+                                <button class="w-full bg-purple-500 hover:bg-purple-600 text-white py-3 rounded-lg font-bold transition">
+                                    <i class="fas fa-handshake mr-2"></i> MAKE OFFER
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+                            <h3 class="text-xl font-bold mb-4">Recent Offers</h3>
+                            <div id="recent-offers">
+                                <!-- Offers will be inserted here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Terminal Section -->
+            <div id="ai-terminal-section" class="mt-10 mb-6">
+                <h2 class="text-2xl font-bold mb-4 font-pixel">🤖 AI PROPERTY ASSISTANT</h2>
+                <div class="terminal rounded-lg p-4 text-green-400">
+                    <div id="terminal-output" class="mb-4">
+                        <p class="typing-animation">👋 Hello, I'm your AI Property Assistant. How can I help you find your next moon investment?</p>
+                    </div>
+                    <div class="flex">
+                        <span class="mr-2">$</span>
+                        <input id="terminal-input" type="text" class="bg-transparent text-green-400 flex-grow focus:outline-none" placeholder="Ask me about properties or investment opportunities...">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Community Voting & Options -->
+            <div id="community-section" class="mb-10">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold font-pixel">🎭 COMMUNITY VOTING & OPTIONS</h2>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Voting Section -->
+                        <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                            <h3 class="font-bold mb-4 text-center">Current Vote</h3>
+                            <div class="space-y-4">
+                                <div class="bg-green-100 dark:bg-green-900 rounded-lg p-3">
+                                    <div class="flex justify-between items-center">
+                                        <span>HODL</span>
+                                        <span class="font-bold">78%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 78%"></div>
+                                    </div>
+                                </div>
+                                <div class="bg-red-100 dark:bg-red-900 rounded-lg p-3">
+                                    <div class="flex justify-between items-center">
+                                        <span>SELL</span>
+                                        <span class="font-bold">22%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                        <div class="bg-red-500 h-2 rounded-full" style="width: 22%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-bold mt-4">
+                                <i class="fas fa-vote-yea mr-2"></i> Cast Vote
+                            </button>
+                        </div>
+
+                        <!-- Sales Section -->
+                        <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                            <h3 class="font-bold mb-4 text-center">Sales Options</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span>Current Price</span>
+                                    <span class="font-bold">$1,500,000</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>24h Volume</span>
+                                    <span class="font-bold">$4.2M</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>Holders</span>
+                                    <span class="font-bold">69,420</span>
+                                </div>
+                            </div>
+                            <button class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-bold mt-4">
+                                <i class="fas fa-handshake mr-2"></i> Place Offer
+                            </button>
+                        </div>
+
+                        <!-- Rental Section -->
+                        <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                            <h3 class="font-bold mb-4 text-center">Rental Options</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span>Monthly Rent</span>
+                                    <span class="font-bold">$8,500</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>Annual Yield</span>
+                                    <span class="font-bold">6.8%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>Available Units</span>
+                                    <span class="font-bold">3/12</span>
+                                </div>
+                            </div>
+                            <button class="w-full bg-purple-500 hover:bg-purple-600 text-white py-2 rounded-lg font-bold mt-4">
+                                <i class="fas fa-key mr-2"></i> Rent Now
+                            </button>
+                        </div>
+
+                        <!-- Community Chat -->
+                        <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                            <h3 class="font-bold mb-4 text-center">Community Chat</h3>
+                            <div class="h-40 overflow-y-auto mb-4 space-y-2">
+                                <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-2">
+                                    <div class="flex justify-between text-sm">
+                                        <span class="font-bold">CryptoWhale69</span>
+                                        <span class="text-gray-500">2m ago</span>
+                                    </div>
+                                    <p class="text-sm">BULLISH on this property! 🚀</p>
+                                </div>
+                                <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-2">
+                                    <div class="flex justify-between text-sm">
+                                        <span class="font-bold">DiamondHands22</span>
+                                        <span class="text-gray-500">5m ago</span>
+                                    </div>
+                                    <p class="text-sm">HODLing for the long term 💎</p>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <input type="text" class="flex-grow px-3 py-2 border rounded-l-lg focus:outline-none" placeholder="Type your message...">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-lg">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Offers Section -->
+            <div class="mb-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-4 font-pixel text-center">RECENT USER OFFERS 💎</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Offer 1 -->
+                    <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                                $DUBAI
+                            </div>
+                            <div>
+                                <h3 class="font-bold">CryptoWhale69</h3>
+                                <p class="text-sm text-gray-500">2 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span>Offer Amount</span>
+                                <span class="font-bold text-green-500">$1,450,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Tokens</span>
+                                <span class="font-bold">145,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Status</span>
+                                <span class="text-yellow-500 font-bold">Pending</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Offer 2 -->
+                    <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                                $PARIS
+                            </div>
+                            <div>
+                                <h3 class="font-bold">ParisLover</h3>
+                                <p class="text-sm text-gray-500">12 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span>Offer Amount</span>
+                                <span class="font-bold text-green-500">$2,650,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Tokens</span>
+                                <span class="font-bold">265,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Status</span>
+                                <span class="text-yellow-500 font-bold">Pending</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Offer 3 -->
+                    <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                                $PENH
+                            </div>
+                            <div>
+                                <h3 class="font-bold">CambodiaFan</h3>
+                                <p class="text-sm text-gray-500">5 days ago</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span>Offer Amount</span>
+                                <span class="font-bold text-green-500">$800,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Tokens</span>
+                                <span class="font-bold">80,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Status</span>
+                                <span class="text-yellow-500 font-bold">Pending</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Offer 4 -->
+                    <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                                $DUBAI
+                            </div>
+                            <div>
+                                <h3 class="font-bold">DiamondHands22</h3>
+                                <p class="text-sm text-gray-500">1 day ago</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span>Offer Amount</span>
+                                <span class="font-bold text-green-500">$1,400,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Tokens</span>
+                                <span class="font-bold">140,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Status</span>
+                                <span class="text-yellow-500 font-bold">Pending</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-6 mt-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-center md:text-left mb-4 md:mb-0">
+                        <div class="flex items-center justify-center md:justify-start">
+                            <i class="fas fa-moon text-white text-2xl mr-2"></i>
+                            <span class="font-pixel text-xl tracking-tight">MOON ESTATE</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-2">The first real estate meme launchpad in the world</p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-discord text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-telegram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-4 text-center text-xs text-gray-500">
+                    <p>⚠️ This is a demo application. Not financial advice. DYOR. 1 HOUSE = 1 HOUSE.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Virtual Tour Modal -->
+    <div id="tour-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-screen overflow-auto">
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <h3 class="text-xl font-bold" id="tour-modal-title">Virtual Tour</h3>
+                <button id="close-tour" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <div class="bg-black relative h-96 flex items-center justify-center">
+                    <div id="tour-content" class="w-full h-full relative overflow-hidden">
+                        <!-- Virtual tour content will go here -->
+                    </div>
+                    <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
+                        <button class="tour-nav-btn bg-white/30 hover:bg-white/50 px-3 py-1 rounded-full">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="tour-nav-btn bg-white/30 hover:bg-white/50 px-3 py-1 rounded-full">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-4 grid grid-cols-5 gap-2">
+                    <div class="h-16 bg-gray-200 rounded cursor-pointer hover:opacity-80 tour-thumbnail active"></div>
+                    <div class="h-16 bg-gray-200 rounded cursor-pointer hover:opacity-80 tour-thumbnail"></div>
+                    <div class="h-16 bg-gray-200 rounded cursor-pointer hover:opacity-80 tour-thumbnail"></div>
+                    <div class="h-16 bg-gray-200 rounded cursor-pointer hover:opacity-80 tour-thumbnail"></div>
+                    <div class="h-16 bg-gray-200 rounded cursor-pointer hover:opacity-80 tour-thumbnail"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Property data
+        const properties = {
+            dubai: {
+                title: "Luxury Apartment in Dubai",
+                ticker: "$DUBAI",
+                tickerClass: "bg-yellow-500",
+                description: "This stunning 3-bedroom apartment in Palm Jumeirah offers breathtaking views of the Arabian Gulf. With high-end finishes, smart home technology, and access to premium amenities, this property is a true gem in Dubai's crown jewel. The apartment features marble flooring, floor-to-ceiling windows, and a private balcony perfect for enjoying Dubai's year-round sunshine. The building includes 24/7 security, infinity pool, gym, and direct beach access. BULLISH AF! 🚀🌙",
+                size: "2,850 sq ft",
+                bedrooms: "3",
+                bathrooms: "3.5",
+                price: 1500000,
+                funding: {
+                    goal: "$1,500,000",
+                    raised: "$1,170,000",
+                    investors: 24,
+                    percent: 78,
+                    timeLeft: "2 days, 5 hours"
+                },
+                dao: "$1,170,000",
+                seller: "Sheikh Habibi",
+                offers: [
+                    { user: "CryptoWhale69", amount: "$1,450,000", time: "2 hours ago" },
+                    { user: "DiamondHands22", amount: "$1,400,000", time: "1 day ago" },
+                    { user: "MoonBoySatoshi", amount: "$1,350,000", time: "2 days ago" }
+                ]
+            },
+            paris: {
+                title: "Charming House in Paris",
+                ticker: "$PARIS",
+                tickerClass: "bg-blue-500",
+                description: "Experience the charm of Le Marais with this exceptional 17th-century townhouse. Featuring original beams, herringbone parquet flooring, and ornate fireplaces, this 4-bedroom gem has been meticulously renovated to blend historic character with modern luxury. The property includes a private courtyard garden – a rare find in central Paris. Just steps away from Place des Vosges, boutiques, galleries, and cafés. This isn't just a house, it's a piece of Parisian history! HODL this beauty and watch your investment GO TO THE MOON! 🚀🇫🇷",
+                size: "3,200 sq ft",
+                bedrooms: "4",
+                bathrooms: "3",
+                price: 2800000,
+                funding: {
+                    goal: "$2,800,000",
+                    raised: "$1,176,000",
+                    investors: 18,
+                    percent: 42,
+                    timeLeft: "5 days, 12 hours"
+                },
+                dao: "$1,176,000",
+                seller: "Monsieur Pierre Dupont",
+                offers: [
+                    { user: "ParisLover", amount: "$2,650,000", time: "12 hours ago" },
+                    { user: "EiffelMoon", amount: "$2,500,000", time: "3 days ago" }
+                ]
+            },
+            phnompenh: {
+                title: "Building in Phnom Penh",
+                ticker: "$PENH",
+                tickerClass: "bg-purple-500",
+                description: "Prime investment opportunity in Cambodia's rapidly growing capital! This 12-unit apartment building is located in the desirable Riverside area, close to restaurants, shops, and the Mekong River promenade. Each unit is currently rented, providing immediate cash flow, with potential for rental increases. The property includes 6 two-bedroom units and 6 one-bedroom units, secure parking, rooftop terrace, and 24/7 security. Cambodia's economy has been growing at 7% annually pre-pandemic, making this an excellent investment for those looking to diversify their real estate portfolio internationally. EARLY GEMS MAKE THE BIGGEST GAINS! 💎🙌",
+                size: "10,500 sq ft",
+                bedrooms: "18 total",
+                bathrooms: "12 total",
+                price: 850000,
+                funding: {
+                    goal: "$850,000",
+                    raised: "$127,500",
+                    investors: 7,
+                    percent: 15,
+                    timeLeft: "12 days, 8 hours"
+                },
+                dao: "$127,500",
+                seller: "Sok Vibol",
+                offers: [
+                    { user: "CambodiaFan", amount: "$800,000", time: "5 days ago" }
+                ]
+            }
+        };
+
+        // Utility Functions
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Theme toggling
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        // Check user's preferred color scheme
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Check if user has previously set a preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.documentElement.classList.add('dark');
+        } else if (localStorage.getItem('darkMode') === 'false') {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Dark mode listener
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Wait for DOM to be loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const propertyCards = document.querySelectorAll('.property-card');
+            const propertyDetail = document.getElementById('property-detail');
+            const backButton = document.getElementById('back-button');
+            const terminalInput = document.getElementById('terminal-input');
+            const terminalOutput = document.getElementById('terminal-output');
+            const virtualTour = document.getElementById('virtual-tour');
+            const tourModal = document.getElementById('tour-modal');
+            const closeTour = document.getElementById('close-tour');
+            const tourThumbnails = document.querySelectorAll('.tour-thumbnail');
+            
+            let currentProperty = null;
+            
+            // Theme toggle
+            themeToggle.addEventListener('click', toggleDarkMode);
+            
+            // Property card click
+            propertyCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const propertyId = this.getAttribute('data-property');
+                    showPropertyDetail(propertyId);
+                });
+            });
+            
+            // Back button
+            backButton.addEventListener('click', function() {
+                propertyDetail.classList.add('hidden');
+                document.querySelector('.grid').classList.remove('hidden');
+            });
+            
+            // Virtual tour click
+            virtualTour.addEventListener('click', function() {
+                tourModal.classList.remove('hidden');
+                document.getElementById('tour-modal-title').textContent = `Virtual Tour: ${properties[currentProperty].title}`;
+                generateVirtualTour(currentProperty);
+            });
+            
+            // Close tour modal
+            closeTour.addEventListener('click', function() {
+                tourModal.classList.add('hidden');
+            });
+            
+            // Tour thumbnails
+            tourThumbnails.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    // Remove active class from all thumbnails
+                    tourThumbnails.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked thumbnail
+                    this.classList.add('active');
+                    
+                    // In a real implementation, this would change the virtual tour view
+                    // Here we'll just update the tour content with a different colored div
+                    const randomColor = `rgb(${Math.floor(Math.random()*200)}, ${Math.floor(Math.random()*200)}, ${Math.floor(Math.random()*200)})`;
+                    document.getElementById('tour-content').innerHTML = `
+                        <div class="absolute inset-0 flex items-center justify-center" style="background-color: ${randomColor}">
+                            <div class="text-white text-center">
+                                <i class="fas fa-vr-cardboard text-5xl mb-2"></i>
+                                <p class="text-lg">Virtual Tour View ${Array.from(tourThumbnails).indexOf(this) + 1}</p>
+                                <p class="mt-2 max-w-md mx-auto">Imagine a beautiful ${currentProperty === 'dubai' ? 'apartment' : currentProperty === 'paris' ? 'house' : 'building'} view here!</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+            
+            // Terminal input
+            terminalInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    const input = this.value.trim();
+                    if (input) {
+                        // Add user message to terminal
+                        addTerminalMessage(input, 'user');
+                        
+                        // Clear input
+                        this.value = '';
+                        
+                        // Process the input and generate a response
+                        setTimeout(() => {
+                            const response = generateAIResponse(input);
+                            addTerminalMessage(response, 'assistant');
+                        }, 500);
+                    }
+                }
+            });
+            
+            // Helper function to show property details
+            function showPropertyDetail(propertyId) {
+                currentProperty = propertyId;
+                const property = properties[propertyId];
+                
+                // Hide property grid and show detail view
+                document.querySelector('.grid').classList.add('hidden');
+                propertyDetail.classList.remove('hidden');
+                
+                // Update property details
+                document.getElementById('property-title').textContent = property.title;
+                document.getElementById('property-ticker').textContent = property.ticker;
+                document.getElementById('property-ticker').className = `px-3 py-1 rounded-full text-white font-bold ${property.tickerClass}`;
+                document.getElementById('property-description').textContent = property.description;
+                document.getElementById('property-size').textContent = property.size;
+                document.getElementById('property-bedrooms').textContent = property.bedrooms;
+                document.getElementById('property-bathrooms').textContent = property.bathrooms;
+                
+                // Update funding details
+                document.getElementById('funding-goal').textContent = property.funding.goal;
+                document.getElementById('funding-raised').textContent = property.funding.raised;
+                document.getElementById('funding-investors').textContent = property.funding.investors;
+                document.getElementById('funding-time').textContent = property.funding.timeLeft;
+                document.getElementById('funding-progress').style.width = `${property.funding.percent}%`;
+                document.getElementById('funding-progress').textContent = `${property.funding.percent}%`;
+                
+                // Update DAO treasury
+                document.getElementById('dao-treasury').textContent = property.dao;
+                
+                // Update offers
+                const offersContainer = document.getElementById('recent-offers');
+                offersContainer.innerHTML = '';
+                
+                if (property.offers && property.offers.length > 0) {
+                    property.offers.forEach(offer => {
+                        const offerEl = document.createElement('div');
+                        offerEl.className = 'border-b border-gray-200 dark:border-gray-700 py-3 last:border-b-0';
+                        offerEl.innerHTML = `
+                            <div class="flex justify-between">
+                                <div class="font-bold">${offer.amount}</div>
+                                <div class="text-sm text-gray-500">${offer.time}</div>
+                            </div>
+                            <div class="text-sm">by ${offer.user}</div>
+                        `;
+                        offersContainer.appendChild(offerEl);
+                    });
+                } else {
+                    offersContainer.innerHTML = '<p class="text-gray-500 text-center py-4">No offers yet</p>';
+                }
+            }
+            
+            // Function to generate an AI response (simplified)
+            function generateAIResponse(input) {
+                const lowerInput = input.toLowerCase();
+                
+                if (lowerInput.includes('dubai') || lowerInput.includes('apartment') || lowerInput.includes('palm')) {
+                    return "Welcome to our Palm Jumeirah apartment. This 3-bedroom residence features premium finishes, smart technology, and exclusive amenities. How may I assist you?";
+                } else if (lowerInput.includes('price') || lowerInput.includes('cost') || lowerInput.includes('value')) {
+                    return "The property is listed at $1,500,000. We have secured 78% of the funding goal. Would you like to discuss investment options?";
+                } else if (lowerInput.includes('location') || lowerInput.includes('area') || lowerInput.includes('neighborhood')) {
+                    return "The apartment is situated in Palm Jumeirah, offering proximity to Atlantis, fine dining, and beaches. Would you like specific details about the area?";
+                } else if (lowerInput.includes('features') || lowerInput.includes('amenities') || lowerInput.includes('specifications')) {
+                    return "The property includes 3 bedrooms, 3.5 bathrooms, and 2,850 square feet of living space. Building amenities feature 24/7 security, infinity pool, and beach access. Which aspect interests you most?";
+                } else if (lowerInput.includes('invest') || lowerInput.includes('buy') || lowerInput.includes('purchase')) {
+                    return "To proceed with investment, please use the 'Invest Now' button. I can guide you through the process. Would you like to schedule a consultation?";
+                } else if (lowerInput.includes('virtual') || lowerInput.includes('tour') || lowerInput.includes('viewing')) {
+                    return "Our virtual tour provides a comprehensive 360-degree view of the property. Would you like to begin the tour now?";
+                } else if (lowerInput.includes('hello') || lowerInput.includes('hi') || lowerInput.includes('hey')) {
+                    return "Good day. I'm here to assist you with information about our Palm Jumeirah property. How may I help you?";
+                } else {
+                    return "I can provide information about the property's features, location, pricing, or investment process. What would you like to know?";
+                }
+            }
+            
+            // Function to generate a virtual tour (simplified)
+            function generateVirtualTour(propertyId) {
+                const tourContent = document.getElementById('tour-content');
+                let bgColor;
+                let icon;
+                let title;
+                
+                switch (propertyId) {
+                    case 'dubai':
+                        bgColor = 'from-yellow-400 to-yellow-600';
+                        icon = 'building';
+                        title = 'Dubai Apartment';
+                        break;
+                    case 'paris':
+                        bgColor = 'from-blue-400 to-blue-600';
+                        icon = 'home';
+                        title = 'Paris House';
+                        break;
+                    case 'phnompenh':
+                        bgColor = 'from-purple-400 to-purple-600';
+                        icon = 'city';
+                        title = 'Phnom Penh Building';
+                        break;
+                }
+                
+                tourContent.innerHTML = `
+                    <div class="absolute inset-0 bg-gradient-to-br ${bgColor} flex items-center justify-center">
+                        <div class="text-white text-center">
+                            <i class="fas fa-${icon} text-7xl mb-4"></i>
+                            <h3 class="text-2xl font-bold mb-2">${title} Tour</h3>
+                            <p class="max-w-md mx-auto">Welcome to the virtual tour! Use the navigation buttons to explore different areas of the property.</p>
+                            <div class="mt-6 p-3 bg-white/10 rounded-lg inline-block flicker">
+                                <i class="fas fa-vr-cardboard mr-2"></i> 
+                                <span>360° VIRTUAL EXPERIENCE</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Function to add a message to the terminal
+            function addTerminalMessage(message, sender) {
+                const messageEl = document.createElement('p');
+                
+                if (sender === 'user') {
+                    messageEl.innerHTML = `<span class="text-blue-400">You:</span> ${message}`;
+                } else {
+                    // Remove typing animation from previous message if exists
+                    const typingMessage = terminalOutput.querySelector('.typing-animation');
+                    if (typingMessage) {
+                        typingMessage.classList.remove('typing-animation');
+                    }
+                    
+                    // Add the new message with typing animation
+                    messageEl.innerHTML = `<span class="text-green-400">🤖 MoonBot:</span> `;
+                    messageEl.classList.add('typing-animation');
+                    
+                    // Simulate typing effect
+                    let textToShow = '';
+                    let charIndex = 0;
+                    
+                    const typeInterval = setInterval(() => {
+                        if (charIndex < message.length) {
+                            textToShow += message.charAt(charIndex);
+                            messageEl.innerHTML = `<span class="text-green-400">🤖 MoonBot:</span> ${textToShow}`;
+                            charIndex++;
+                        } else {
+                            clearInterval(typeInterval);
+                            messageEl.classList.remove('typing-animation');
+                        }
+                    }, 20);
+                }
+                
+                terminalOutput.appendChild(messageEl);
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
