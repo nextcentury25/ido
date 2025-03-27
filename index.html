@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Century - Tokenized Real Estate Launchpad</title>
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AlchemySDK -->
+    <script src="https://cdn.jsdelivr.net/npm/alchemy-sdk@latest/dist/index.min.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/3fe2a82a98.js" crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        secondary: '#2A2D3E',
+                        accent: '#6366F1',
+                        dark: {
+                            bg: '#181818',
+                            card: '#232323',
+                            text: '#F3F4F6'
+                        },
+                        light: {
+                            bg: '#FFFFFF',
+                            card: '#F9FAFB',
+                            text: '#1F2937'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(90deg, #5D5CDE 0%, #6366F1 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #5D5CDE 0%, #6366F1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: #5D5CDE;
+            transform: translateX(-50%);
+        }
+        
+        @media (max-width: 768px) {
+            .roadmap-line {
+                left: 20px;
+            }
+        }
+        
+        .dark .dark\:text-dark-text {
+            color: #F3F4F6;
+        }
+        
+        .dark .dark\:bg-dark-bg {
+            background-color: #181818;
+        }
+        
+        .dark .dark\:bg-dark-card {
+            background-color: #232323;
+        }
+    </style>
+</head>
+<body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/80 dark:bg-dark-bg/80 backdrop-blur-md z-50 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2">
+                <span class="text-2xl font-bold gradient-text">Next Century</span>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#why" class="font-medium hover:text-primary transition-colors duration-200">Why Next Century</a>
+                <a href="#tokenomics" class="font-medium hover:text-primary transition-colors duration-200">Tokenomics</a>
+                <a href="#team" class="font-medium hover:text-primary transition-colors duration-200">Team</a>
+                <a href="#roadmap" class="font-medium hover:text-primary transition-colors duration-200">Roadmap</a>
+                <a href="#ido" class="font-medium hover:text-primary transition-colors duration-200">IDO</a>
+                <button id="toggleTheme" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-card transition-colors duration-200">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+            </div>
+            
+            <div class="md:hidden flex items-center">
+                <button id="toggleThemeMobile" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-card mr-2 transition-colors duration-200">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+                <button id="mobileMenuBtn" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-dark-card transition-colors duration-200">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white dark:bg-dark-bg border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="#why" class="font-medium py-2 hover:text-primary transition-colors duration-200">Why Next Century</a>
+                <a href="#tokenomics" class="font-medium py-2 hover:text-primary transition-colors duration-200">Tokenomics</a>
+                <a href="#team" class="font-medium py-2 hover:text-primary transition-colors duration-200">Team</a>
+                <a href="#roadmap" class="font-medium py-2 hover:text-primary transition-colors duration-200">Roadmap</a>
+                <a href="#ido" class="font-medium py-2 hover:text-primary transition-colors duration-200">IDO</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-4">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">Next Century</h1>
+                    <p class="text-2xl md:text-3xl font-medium gradient-text mb-8">Tokenized Real Estate Launchpad with AI Agents</p>
+                    <p class="text-xl mb-10">Access global real estate investments with fractionalized ownership, powered by AI agents and decentralized governance. Break free from the traditional real estate market with Next Century.</p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <button id="connectWalletBtn" class="gradient-bg text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                            Connect Wallet
+                        </button>
+                        <a href="#ido" class="bg-gray-100 dark:bg-dark-card text-light-text dark:text-dark-text font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                            Join IDO
+                        </a>
+                    </div>
+                    
+                    <div class="mt-8 flex items-center text-sm">
+                        <div class="mr-4 py-1 px-3 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full">
+                            IDO Coming Soon
+                        </div>
+                        <div>CA: <span class="font-mono">Coming soon</span></div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 relative">
+                    <div class="w-full h-[400px] md:h-[500px] rounded-3xl overflow-hidden relative shadow-2xl">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/80 to-purple-900/80 z-10"></div>
+                        <div id="heroAnimation" class="absolute inset-0 flex items-center justify-center z-20">
+                            <!-- 3D building animation will be rendered here -->
+                            <div class="text-center">
+                                <div class="text-6xl mb-4">🏢</div>
+                                <div class="text-white font-bold text-xl">Tokenized Real Estate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Logos -->
+    <section class="py-10 px-4 bg-gray-50 dark:bg-dark-card transition-colors duration-300">
+        <div class="container mx-auto">
+            <p class="text-center text-xl font-medium mb-8">Project featured in...</p>
+            <div class="flex flex-wrap justify-center items-center gap-10 opacity-70">
+                <div class="w-32 h-10 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+                <div class="w-32 h-10 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+                <div class="w-32 h-10 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+                <div class="w-32 h-10 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+                <div class="w-32 h-10 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Why Next Century -->
+    <section id="why" class="py-20 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center">Why <span class="gradient-text">Next Century</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-light-card dark:bg-dark-card p-8 rounded-2xl shadow-lg card-hover transition-all duration-300">
+                    <div class="h-16 w-16 gradient-bg rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-building-columns text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Tokenizing Real Estate</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Next Century and its native token work together to power on-chain property ownership, insurance, and fractional asset ownership, creating a decentralized system where investors share in the value.</p>
+                </div>
+                
+                <div class="bg-light-card dark:bg-dark-card p-8 rounded-2xl shadow-lg card-hover transition-all duration-300">
+                    <div class="h-16 w-16 gradient-bg rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-robot text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">AI-Driven Real Estate</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Our AI agents automate property onboarding, valuation, documentation, and virtual tours, helping investors make informed decisions while maximizing efficiency and transparency.</p>
+                </div>
+                
+                <div class="bg-light-card dark:bg-dark-card p-8 rounded-2xl shadow-lg card-hover transition-all duration-300">
+                    <div class="h-16 w-16 gradient-bg rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-link text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Multi-Chain Technology</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Built on Phala Cloud's TEE and MCP for cross-chain interoperability, Next Century supports both Solana and Base Chain, enabling flexibility and broader accessibility.</p>
+                </div>
+                
+                <div class="bg-light-card dark:bg-dark-card p-8 rounded-2xl shadow-lg card-hover transition-all duration-300">
+                    <div class="h-16 w-16 gradient-bg rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-handshake text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">DAO Governance</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Token holders vote on property sales and platform decisions, ensuring democratic control and transparency. Your tokens are your voice in shaping the future of real estate investment.</p>
+                </div>
+                
+                <div class="bg-light-card dark:bg-dark-card p-8 rounded-2xl shadow-lg card-hover transition-all duration-300">
+                    <div class="h-16 w-16 gradient-bg rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-halved text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Asset-Backed Security</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Unlike meme coins, Next Century tokens represent real-world assets with verifiable value. Property ownership is legally structured and transparent, reducing investment risk.</p>
+                </div>
+                
+                <div class="bg-light-card dark:bg-dark-card p-8 rounded-2xl shadow-lg card-hover transition-all duration-300">
+                    <div class="h-16 w-16 gradient-bg rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-money-bill-transfer text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Liquidity & Access</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Fractional ownership provides global access to real estate investments with low entry barriers. Trade property tokens on DEXs with real-time pricing based on market data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Alpha Section -->
+    <section class="py-20 px-4 gradient-bg text-white">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center">So what's the alpha?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl">
+                    <h3 class="text-xl font-bold mb-4">The Most Powerful Real Estate Tech</h3>
+                    <p>Next Century isn't a startup hoping for adoption—it's launching with it. Backed by industry experts and built on advanced AI and blockchain technology, it's a system ready for global scale from day one.</p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl">
+                    <h3 class="text-xl font-bold mb-4">A Token Designed for Long-Term Value</h3>
+                    <p>Our token isn't a meme coin—it's a real utility token ready to transform a trillion-dollar industry. No pump-and-dump, no gimmicks. Just a system built for real-world adoption and lasting impact.</p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl">
+                    <h3 class="text-xl font-bold mb-4">Own More Than Property—Own the Future</h3>
+                    <p>For too long, real estate giants took the biggest profits. Next Century changes that—investors get proportional returns, property rights are secure, and every transaction is fair, secure, and transparent.</p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl">
+                    <h3 class="text-xl font-bold mb-4">Not Just a Cryptocurrency</h3>
+                    <p>This isn't a quick flip, it's a movement. Token holders aren't just owning crypto—they're helping rewrite the rules and shape the future of real estate investment from the ground up. Join the revolution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Technology Section -->
+    <section class="py-20 px-4">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <div class="p-6 rounded-3xl bg-light-card dark:bg-dark-card shadow-xl max-w-lg mx-auto">
+                        <div class="w-full h-[300px] bg-gray-200 dark:bg-gray-700 rounded-xl mb-6 flex items-center justify-center">
+                            <i class="fas fa-code-branch text-6xl text-gray-400 dark:text-gray-500"></i>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="h-6 w-3/4 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                            <div class="h-4 w-full bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                            <div class="h-4 w-5/6 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                            <div class="h-4 w-4/5 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 md:pl-10">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8">The technology powering real estate 3.0</h2>
+                    <p class="text-xl mb-8">Next Century was born from a collective of real estate and blockchain experts who recognized the need for innovation in property investment. Built on Web3 and AI, it eliminates intermediaries, reduces costs, and increases transparency—putting control back where it belongs: in the hands of investors.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="h-6 w-6 gradient-bg rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <p class="ml-4">Phala Cloud's Trusted Execution Environment (TEE) for secure data handling</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="h-6 w-6 gradient-bg rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <p class="ml-4">Multi-Chain Protocol (MCP) for cross-chain interoperability between Solana and Base Chain</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="h-6 w-6 gradient-bg rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <p class="ml-4">AI-powered property valuation, documentation, and virtual tours</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="h-6 w-6 gradient-bg rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <p class="ml-4">ERC-720 token standard for fractional real estate ownership</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="py-20 px-4 bg-gray-50 dark:bg-dark-card transition-colors duration-300">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center">The strategic roadmap to global scale</h2>
+            <p class="text-xl text-center max-w-3xl mx-auto mb-20">The real estate industry is overdue for a revolution, and Next Century is leading the charge. Our roadmap lays out the key milestones designed to drive innovation, adoption, and long-term impact.</p>
+            
+            <div class="relative">
+                <div class="roadmap-line hidden md:block"></div>
+                
+                <div class="space-y-24">
+                    <!-- Phase 1 -->
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/2 md:pr-16 mb-8 md:mb-0 md:text-right">
+                            <span class="inline-block py-1 px-3 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm mb-4">Phase 1: Foundation (Months 1-3)</span>
+                            <h3 class="text-2xl font-bold mb-4">Team Assembly & Technology Stack</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Building our expert team and finalizing the blockchain infrastructure with Phala TEE, Solana, and Base Chain integration.</p>
+                            <p class="font-medium mt-4">Strategic Vision:</p>
+                            <p class="text-gray-600 dark:text-gray-300">Create the foundation for a secure, scalable platform with cross-chain capabilities.</p>
+                        </div>
+                        
+                        <div class="md:w-1/2 md:pl-16">
+                            <div class="bg-white dark:bg-dark-bg rounded-2xl shadow-lg p-6 max-w-sm">
+                                <div class="h-40 bg-gray-100 dark:bg-gray-800 rounded-xl mb-4 flex items-center justify-center">
+                                    <i class="fas fa-users-gear text-4xl text-gray-400 dark:text-gray-500"></i>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                    <div class="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                    <div class="h-3 w-5/6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 2 -->
+                    <div class="flex flex-col md:flex-row-reverse items-center">
+                        <div class="md:w-1/2 md:pl-16 mb-8 md:mb-0 md:text-left">
+                            <span class="inline-block py-1 px-3 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm mb-4">Phase 2: Development (Months 4-6)</span>
+                            <h3 class="text-2xl font-bold mb-4">Smart Contracts & AI Implementation</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Building core smart contracts for tokenization and developing AI agents for property onboarding, virtual tours, and compliance verification.</p>
+                            <p class="font-medium mt-4">Strategic Vision:</p>
+                            <p class="text-gray-600 dark:text-gray-300">Create a seamless, automated platform that makes real estate investment accessible to everyone.</p>
+                        </div>
+                        
+                        <div class="md:w-1/2 md:pr-16">
+                            <div class="bg-white dark:bg-dark-bg rounded-2xl shadow-lg p-6 max-w-sm ml-auto">
+                                <div class="h-40 bg-gray-100 dark:bg-gray-800 rounded-xl mb-4 flex items-center justify-center">
+                                    <i class="fas fa-code text-4xl text-gray-400 dark:text-gray-500"></i>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                    <div class="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                    <div class="h-3 w-5/6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 3 -->
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/2 md:pr-16 mb-8 md:mb-0 md:text-right">
+                            <span class="inline-block py-1 px-3 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm mb-4">Phase 3: Legal & Compliance (Months 7-9)</span>
+                            <h3 class="text-2xl font-bold mb-4">Regulatory Framework Establishment</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Partnering with legal firms to structure SPVs for DAO-held assets and ensuring compliance with global regulations.</p>
+                            <p class="font-medium mt-4">Strategic Vision:</p>
+                            <p class="text-gray-600 dark:text-gray-300">Create a legally compliant framework that supports global property ownership while protecting investors.</p>
+                        </div>
+                        
+                        <div class="md:w-1/2 md:pl-16">
+                            <div class="bg-white dark:bg-dark-bg rounded-2xl shadow-lg p-6 max-w-sm">
+                                <div class="h-40 bg-gray-100 dark:bg-gray-800 rounded-xl mb-4 flex items-center justify-center">
+                                    <i class="fas fa-scale-balanced text-4xl text-gray-400 dark:text-gray-500"></i>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                    <div class="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                    <div class="h-3 w-5/6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 4 -->
+                    <div class="flex flex-col md:flex-row-reverse items-center">
+                        <div class="md:w-1/2 md:pl-16 mb-8 md:mb-0 md:text-left">
+                            <span class="inline-block py-1 px-3 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full text-sm mb-4">Phase 4: Pilot Launch (Month 10)</span>
+                            <h3 class="text-2xl font-bold mb-4">First Tokenized Property</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Tokenizing a pilot property (Dubai luxury apartment) and testing DAO voting, liquidity pools, and AI-driven workflows.</p>
+                            <p class="font-medium mt-4">Strategic Vision:</p>
+                            <p class="text-gray-600 dark:text-gray-300">Demonstrate the platform's capabilities with a real-world property and gather user feedback.</p>
+                        </div>
+                        
+                        <div class="md:w-1/2 md:pr-16">
+                            <div class="bg-white dark:bg-dark-bg rounded-2xl shadow-lg p-6 max-w-sm ml-auto">
+                                <div class="h-40 bg-gray-100 dark:bg-gray-800 rounded-xl mb-4 flex items-center justify-center">
+                                    <i class="fas fa-building text-4xl text-gray-400 dark:text-gray-500"></i>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                    <div class="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                    <div class="h-3 w-5/6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 5 -->
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/2 md:pr-16 mb-8 md:mb-0 md:text-right">
+                            <span class="inline-block py-1 px-3 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-full text-sm mb-4">Phase 5: Full Launch & Growth (Months 11-12)</span>
+                            <h3 class="text-2xl font-bold mb-4">Public Platform Launch</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Full public launch with marketing targeting real estate developers and investors, plus DEX liquidity partnerships.</p>
+                            <p class="font-medium mt-4">Strategic Vision:</p>
+                            <p class="text-gray-600 dark:text-gray-300">Achieve mass adoption and establish Next Century as the leading platform for tokenized real estate.</p>
+                        </div>
+                        
+                        <div class="md:w-1/2 md:pl-16">
+                            <div class="bg-white dark:bg-dark-bg rounded-2xl shadow-lg p-6 max-w-sm">
+                                <div class="h-40 bg-gray-100 dark:bg-gray-800 rounded-xl mb-4 flex items-center justify-center">
+                                    <i class="fas fa-rocket text-4xl text-gray-400 dark:text-gray-500"></i>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                    <div class="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                    <div class="h-3 w-5/6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Tokenomics Section -->
+    <section id="tokenomics" class="py-20 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center">Tokenomics</h2>
+            <p class="text-xl text-center max-w-3xl mx-auto mb-20">Own your stake in the future of real estate</p>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center md:space-x-12 mb-20">
+                <div class="bg-light-card dark:bg-dark-card p-6 rounded-2xl shadow-lg mb-10 md:mb-0 text-center w-full md:w-auto">
+                    <p class="text-gray-500 dark:text-gray-400 mb-2">Token Name</p>
+                    <p class="text-xl font-bold">Next Century Token</p>
+                </div>
+                
+                <div class="bg-light-card dark:bg-dark-card p-6 rounded-2xl shadow-lg mb-10 md:mb-0 text-center w-full md:w-auto">
+                    <p class="text-gray-500 dark:text-gray-400 mb-2">Ticker Symbol</p>
+                    <p class="text-xl font-bold">NCT</p>
+                </div>
+                
+                <div class="bg-light-card dark:bg-dark-card p-6 rounded-2xl shadow-lg mb-10 md:mb-0 text-center w-full md:w-auto">
+                    <p class="text-gray-500 dark:text-gray-400 mb-2">Total Supply</p>
+                    <p class="text-xl font-bold">100,000,000</p>
+                </div>
+                
+                <div class="bg-light-card dark:bg-dark-card p-6 rounded-2xl shadow-lg text-center w-full md:w-auto">
+                    <p class="text-gray-500 dark:text-gray-400 mb-2">Blockchains</p>
+                    <p class="text-xl font-bold">Solana & Base</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <div class="max-w-md mx-auto">
+                        <div class="w-full h-80 rounded-xl bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                            <i class="fas fa-chart-pie text-6xl text-gray-400 dark:text-gray-500"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 md:pl-10">
+                    <h3 class="text-2xl font-bold mb-6">Token Allocation</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>IDO & Public Sale</span>
+                                <span class="font-bold">20%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="gradient-bg h-3 rounded-full" style="width: 20%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Team & Advisors</span>
+                                <span class="font-bold">15%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="gradient-bg h-3 rounded-full" style="width: 15%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Property Acquisition Fund</span>
+                                <span class="font-bold">25%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="gradient-bg h-3 rounded-full" style="width: 25%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Platform Development</span>
+                                <span class="font-bold">15%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="gradient-bg h-3 rounded-full" style="width: 15%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Marketing & Partnerships</span>
+                                <span class="font-bold">10%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="gradient-bg h-3 rounded-full" style="width: 10%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Liquidity & Ecosystem</span>
+                                <span class="font-bold">15%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="gradient-bg h-3 rounded-full" style="width: 15%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- IDO Section -->
+    <section id="ido" class="py-20 px-4 gradient-bg text-white">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">Initial DEX Offering (IDO)</h2>
+            <p class="text-xl text-center max-w-3xl mx-auto mb-16">Join our IDO and be part of the real estate revolution</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl text-center">
+                    <h3 class="text-2xl font-bold mb-6">Phase 1</h3>
+                    <p class="text-xl mb-4">Community Round</p>
+                    <div class="text-3xl font-bold mb-4">$0.035</div>
+                    <p class="mb-6">Early supporters get the best price</p>
+                    <div class="py-2 px-4 bg-white/20 rounded-full inline-block">
+                        Allocation: 5,000,000 NCT
+                    </div>
+                    <div class="mt-8">
+                        <div class="flex justify-between mb-2">
+                            <span>Progress</span>
+                            <span>75% Complete</span>
+                        </div>
+                        <div class="w-full bg-white/20 rounded-full h-3">
+                            <div class="bg-white h-3 rounded-full" style="width: 75%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl text-center transform scale-105 border-2 border-white/30">
+                    <div class="py-1 px-3 bg-white text-primary rounded-full inline-block mb-4 font-medium">Current Phase</div>
+                    <h3 class="text-2xl font-bold mb-6">Phase 2</h3>
+                    <p class="text-xl mb-4">Strategic Round</p>
+                    <div class="text-3xl font-bold mb-4">$0.05</div>
+                    <p class="mb-6">Limited allocation, high demand</p>
+                    <div class="py-2 px-4 bg-white/20 rounded-full inline-block">
+                        Allocation: 10,000,000 NCT
+                    </div>
+                    <div class="mt-8">
+                        <div class="flex justify-between mb-2">
+                            <span>Progress</span>
+                            <span>35% Complete</span>
+                        </div>
+                        <div class="w-full bg-white/20 rounded-full h-3">
+                            <div class="bg-white h-3 rounded-full" style="width: 35%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl text-center">
+                    <h3 class="text-2xl font-bold mb-6">Phase 3</h3>
+                    <p class="text-xl mb-4">Public IDO</p>
+                    <div class="text-3xl font-bold mb-4">$0.08</div>
+                    <p class="mb-6">Final round before DEX listing</p>
+                    <div class="py-2 px-4 bg-white/20 rounded-full inline-block">
+                        Allocation: 5,000,000 NCT
+                    </div>
+                    <div class="mt-8">
+                        <div class="flex justify-between mb-2">
+                            <span>Progress</span>
+                            <span>Coming Soon</span>
+                        </div>
+                        <div class="w-full bg-white/20 rounded-full h-3">
+                            <div class="bg-white h-3 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button id="joinIDOBtn" class="bg-white text-primary font-bold py-4 px-10 rounded-full text-lg hover:shadow-lg transition-all duration-300">
+                    Join IDO Now
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Team Section -->
+    <section id="team" class="py-20 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center">The team delivering real estate disruption</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Team Member 1 -->
+                <div class="bg-light-card dark:bg-dark-card rounded-2xl shadow-lg overflow-hidden">
+                    <div class="h-64 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                        <i class="fas fa-user-tie text-5xl text-gray-400 dark:text-gray-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Alex Richardson</h3>
+                        <p class="text-primary font-medium mb-4">CEO & Co-Founder</p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">Serial entrepreneur with 15+ years in PropTech and blockchain. Previously founded and sold two successful real estate platforms with over $50M in exits.</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-primary transition-colors duration-200">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-primary transition-colors duration-200">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="bg-light-card dark:bg-dark-card rounded-2xl shadow-lg overflow-hidden">
+                    <div class="h-64 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                        <i class="fas fa-user-tie text-5xl text-gray-400 dark:text-gray-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Sarah Chen</h3>
+                        <p class="text-primary font-medium mb-4">CTO & Co-Founder</p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">Blockchain architect and AI specialist. Previous lead developer at Ethereum Foundation and technical advisor to multiple successful Web3 projects.</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-primary transition-colors duration-200">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-primary transition-colors duration-200">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="bg-light-card dark:bg-dark-card rounded-2xl shadow-lg overflow-hidden">
+                    <div class="h-64 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                        <i class="fas fa-user-tie text-5xl text-gray-400 dark:text-gray-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Michael Novak</h3>
+                        <p class="text-primary font-medium mb-4">Head of Real Estate</p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">20+ years in global real estate investment. Former executive at Blackstone Real Estate and JLL, managing over $2B in property acquisitions.</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-primary transition-colors duration-200">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-primary transition-colors duration-200">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <a href="#" class="inline-block gradient-bg text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                    View Full Team
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="py-20 px-4 bg-gray-50 dark:bg-dark-card transition-colors duration-300">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center">Frequently Asked Questions</h2>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-6">
+                    <div class="bg-white dark:bg-dark-bg rounded-xl shadow-md overflow-hidden">
+                        <button class="faq-toggle w-full text-left px-6 py-4 font-semibold flex justify-between items-center" data-target="faq1">
+                            <span>What happens if property values decrease after tokenization?</span>
+                            <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                        </button>
+                        <div id="faq1" class="faq-content px-6 py-4 border-t border-gray-100 dark:border-gray-700 hidden">
+                            <p class="text-gray-600 dark:text-gray-300">Property tokens reflect real-world asset values, which means token prices can fluctuate based on the underlying property value. Our platform uses professional appraisals and market data oracles to provide accurate, up-to-date valuations. The DAO governance system allows token holders to vote on property management decisions, including whether to hold or sell assets if values decrease significantly. This gives investors direct control over their assets, unlike traditional real estate investments.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-dark-bg rounded-xl shadow-md overflow-hidden">
+                        <button class="faq-toggle w-full text-left px-6 py-4 font-semibold flex justify-between items-center" data-target="faq2">
+                            <span>What are the vesting schedules for team tokens?</span>
+                            <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                        </button>
+                        <div id="faq2" class="faq-content px-6 py-4 border-t border-gray-100 dark:border-gray-700 hidden">
+                            <p class="text-gray-600 dark:text-gray-300">Team and advisor tokens have a 24-month vesting schedule with a 6-month cliff. This means no team tokens are released for the first 6 months after the token launch, and then they vest linearly over the following 18 months. This structure aligns the team's incentives with long-term project success and demonstrates our commitment to building sustainable value rather than short-term gains.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-dark-bg rounded-xl shadow-md overflow-hidden">
+                        <button class="faq-toggle w-full text-left px-6 py-4 font-semibold flex justify-between items-center" data-target="faq3">
+                            <span>How do you handle blockchain challenges like network congestion?</span>
+                            <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                        </button>
+                        <div id="faq3" class="faq-content px-6 py-4 border-t border-gray-100 dark:border-gray-700 hidden">
+                            <p class="text-gray-600 dark:text-gray-300">Next Century uses a multi-chain approach to mitigate blockchain challenges. By supporting both Solana (for high throughput and low fees) and Base Chain (for EVM compatibility), we provide flexibility during network congestion. Additionally, our platform implements layer-2 solutions and batched transactions to optimize gas costs. For property verification and critical operations, we use Phala's Trusted Execution Environment (TEE) to ensure data integrity even during network disruptions.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-dark-bg rounded-xl shadow-md overflow-hidden">
+                        <button class="faq-toggle w-full text-left px-6 py-4 font-semibold flex justify-between items-center" data-target="faq4">
+                            <span>What legal structures are in place to protect property ownership?</span>
+                            <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                        </button>
+                        <div id="faq4" class="faq-content px-6 py-4 border-t border-gray-100 dark:border-gray-700 hidden">
+                            <p class="text-gray-600 dark:text-gray-300">Each tokenized property is held in a legally compliant Special Purpose Vehicle (SPV) structure that connects token ownership to legal property rights. We work with top legal firms specializing in both real estate and blockchain to ensure our structures comply with regulations in each jurisdiction. The platform uses smart contracts to enforce ownership rights while the legal framework provides traditional legal recourse if needed. This dual-layer approach provides maximum security for investors.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-20 px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">Ready to revolutionize real estate investment?</h2>
+            <p class="text-xl max-w-3xl mx-auto mb-12">Join Next Century today and be part of the future of tokenized real estate. Early investors receive exclusive benefits and priority access to premium properties.</p>
+            
+            <div class="flex flex-wrap justify-center gap-6">
+                <button id="connectWalletBtn2" class="gradient-bg text-white font-semibold py-4 px-10 rounded-full text-lg hover:shadow-lg transition-all duration-300">
+                    Connect Wallet
+                </button>
+                <a href="#ido" class="bg-gray-100 dark:bg-dark-card text-light-text dark:text-dark-text font-semibold py-4 px-10 rounded-full text-lg hover:shadow-lg transition-all duration-300">
+                    Join IDO
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 px-4 bg-gray-50 dark:bg-dark-card transition-colors duration-300">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-10 md:mb-0">
+                    <h3 class="text-2xl font-bold gradient-text mb-4">Next Century</h3>
+                    <p class="max-w-md text-gray-600 dark:text-gray-300">Tokenizing real estate with AI agents and blockchain technology. Making property investment accessible, transparent, and efficient for everyone.</p>
+                    
+                    <div class="mt-6 flex space-x-4">
+                        <a href="#" class="h-10 w-10 rounded-full bg-light-card dark:bg-dark-bg flex items-center justify-center text-gray-400 hover:text-primary transition-colors duration-200">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="h-10 w-10 rounded-full bg-light-card dark:bg-dark-bg flex items-center justify-center text-gray-400 hover:text-primary transition-colors duration-200">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="#" class="h-10 w-10 rounded-full bg-light-card dark:bg-dark-bg flex items-center justify-center text-gray-400 hover:text-primary transition-colors duration-200">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="h-10 w-10 rounded-full bg-light-card dark:bg-dark-bg flex items-center justify-center text-gray-400 hover:text-primary transition-colors duration-200">
+                            <i class="fab fa-medium"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-10">
+                    <div>
+                        <h4 class="font-bold mb-4">Platform</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">Browse Properties</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">How It Works</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">AI Agents</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">DAO Governance</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Resources</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">Whitepaper</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">Documentation</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">Blog</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">FAQs</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Company</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">About Us</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">Careers</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">Privacy Policy</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-gray-500 dark:text-gray-400 text-sm">
+                <p>© 2023 Next Century. All rights reserved.</p>
+                <p class="mt-2">Investing in tokens carries inherent risk. Please review our offering materials and consult with a financial advisor before making any investment decisions.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Web3 Connection Modal -->
+    <div id="walletModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center">
+        <div class="bg-white dark:bg-dark-bg rounded-2xl shadow-xl p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">Connect Wallet</h3>
+                <button id="closeWalletModal" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-card transition-colors duration-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <button class="flex items-center justify-between w-full bg-light-card dark:bg-dark-card p-4 rounded-xl hover:shadow-md transition-all duration-200">
+                    <span class="font-medium">MetaMask</span>
+                    <img src="https://cdn.jsdelivr.net/gh/MetaMask/brand-resources@master/SVG/metamask-fox.svg" alt="MetaMask" class="h-8 w-8">
+                </button>
+                
+                <button class="flex items-center justify-between w-full bg-light-card dark:bg-dark-card p-4 rounded-xl hover:shadow-md transition-all duration-200">
+                    <span class="font-medium">WalletConnect</span>
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.33341 11.4773C13.2738 5.53684 22.7274 5.53684 28.6678 11.4773L29.5363 12.3458C29.9566 12.766 29.9566 13.4489 29.5363 13.8692L27.4221 15.9834C27.212 16.1935 26.8705 16.1935 26.6604 15.9834L25.4147 14.7377C21.2255 10.5486 14.7757 10.5486 10.5865 14.7377L9.26162 16.0626C9.05148 16.2728 8.71002 16.2728 8.49988 16.0626L6.38564 13.9484C5.96539 13.5282 5.96539 12.8453 6.38564 12.425L7.33341 11.4773ZM32.0001 15.7789L33.8924 17.6712C34.3126 18.0914 34.3126 18.7743 33.8924 19.1946L24.9217 28.1652C24.5015 28.5855 23.8186 28.5855 23.3983 28.1652C23.3983 28.1652 23.3983 28.1652 23.3983 28.1652L17.2889 22.0558C17.1838 21.9507 17.0162 21.9507 16.9111 22.0558C16.9111 22.0558 16.9111 22.0558 16.9111 22.0558L10.8017 28.1652C10.3815 28.5855 9.69857 28.5855 9.27833 28.1652C9.27833 28.1652 9.27833 28.1652 9.27833 28.1652L0.307624 19.1946C-0.112622 18.7743 -0.112622 18.0914 0.307624 17.6712L2.19988 15.7789C2.62013 15.3587 3.30299 15.3587 3.72324 15.7789L9.83263 21.8883C9.93772 21.9934 10.1053 21.9934 10.2104 21.8883C10.2104 21.8883 10.2104 21.8883 10.2104 21.8883L16.3198 15.7789C16.74 15.3587 17.4229 15.3587 17.8431 15.7789C17.8431 15.7789 17.8431 15.7789 17.8431 15.7789L23.9525 21.8883C24.0576 21.9934 24.2252 21.9934 24.3303 21.8883L30.4397 15.7789C30.8599 15.3587 31.5428 15.3587 31.963 15.7789L32.0001 15.7789Z" fill="#3B99FC"/>
+                    </svg>
+                </button>
+                
+                <button class="flex items-center justify-between w-full bg-light-card dark:bg-dark-card p-4 rounded-xl hover:shadow-md transition-all duration-200">
+                    <span class="font-medium">Coinbase Wallet</span>
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 0C6.268 0 0 6.268 0 14C0 21.732 6.268 28 14 28C21.732 28 28 21.732 28 14C28 6.268 21.732 0 14 0Z" fill="#0052FF"/>
+                        <path d="M14.2294 19.4375C12.1788 19.4375 10.5219 17.7806 10.5219 15.7301C10.5219 13.6795 12.1788 12.0226 14.2294 12.0226C15.7838 12.0226 17.1338 12.9632 17.6407 14.327H22.0376C21.4701 10.6357 18.1826 7.875 14.2294 7.875C9.87565 7.875 6.375 11.3757 6.375 15.7294C6.375 20.0832 9.87565 23.5838 14.2294 23.5838C18.1826 23.5838 21.4701 20.8238 22.0376 17.1319H17.6407C17.1338 18.4957 15.7838 19.4375 14.2294 19.4375Z" fill="white"/>
+                    </svg>
+                </button>
+                
+                <button class="flex items-center justify-between w-full bg-light-card dark:bg-dark-card p-4 rounded-xl hover:shadow-md transition-all duration-200">
+                    <span class="font-medium">Phantom (Solana)</span>
+                    <svg width="32" height="32" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="128" height="128" rx="64" fill="#AB9FF2"/>
+                        <path d="M110.584 64.9142H99.142C99.142 41.7651 80.173 22.8979 56.9241 22.8979V11.4564C86.466 11.4564 110.584 35.4725 110.584 64.9142Z" fill="white"/>
+                        <path d="M56.924 108.376V96.9346C80.173 96.9346 99.1419 77.9655 99.1419 54.8165H110.583C110.583 84.2581 86.4662 108.376 56.924 108.376Z" fill="white"/>
+                        <path d="M56.9241 73.458C52.0055 73.458 47.9799 69.4324 47.9799 64.5138C47.9799 59.5952 52.0055 55.5695 56.9241 55.5695C61.8428 55.5695 65.8684 59.5952 65.8684 64.5138C65.8684 69.4324 61.8428 73.458 56.9241 73.458Z" fill="white"/>
+                        <path d="M38.1304 73.458C33.2118 73.458 29.1861 69.4324 29.1861 64.5138C29.1861 59.5952 33.2118 55.5695 38.1304 55.5695C43.049 55.5695 47.0747 59.5952 47.0747 64.5138C47.0747 69.4324 43.049 73.458 38.1304 73.458Z" fill="white"/>
+                        <path d="M75.7178 73.458C70.7992 73.458 66.7736 69.4324 66.7736 64.5138C66.7736 59.5952 70.7992 55.5695 75.7178 55.5695C80.6365 55.5695 84.6621 59.5952 84.6621 64.5138C84.6621 69.4324 80.6365 73.458 75.7178 73.458Z" fill="white"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">New to cryptocurrency wallets?</p>
+                <a href="#" class="text-primary font-medium text-sm">Learn how to set up a wallet →</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- IDO Modal -->
+    <div id="idoModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center">
+        <div class="bg-white dark:bg-dark-bg rounded-2xl shadow-xl p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">Join Next Century IDO</h3>
+                <button id="closeIdoModal" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-card transition-colors duration-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="idoForm">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Email Address</label>
+                        <input type="email" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-card text-base" placeholder="your@email.com" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Wallet Address</label>
+                        <input type="text" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-card text-base" placeholder="0x..." required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Investment Amount (USD)</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                            <input type="number" min="100" class="w-full p-3 pl-8 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-card text-base" placeholder="1000" required>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">IDO Phase</label>
+                        <select class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-card text-base">
+                            <option>Phase 1 - Community Round ($0.035)</option>
+                            <option selected>Phase 2 - Strategic Round ($0.05)</option>
+                            <option disabled>Phase 3 - Public IDO ($0.08) - Coming Soon</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <button type="submit" class="w-full gradient-bg text-white font-semibold py-3 rounded-xl">Submit Application</button>
+                </div>
+            </form>
+            
+            <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-500 dark:text-gray-400">
+                <p>By applying, you agree to our <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Dark mode detection and toggle
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+        
+        // Theme toggle buttons
+        document.getElementById('toggleTheme').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+        
+        document.getElementById('toggleThemeMobile').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+        
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+        
+        // FAQ accordions
+        document.querySelectorAll('.faq-toggle').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const target = document.getElementById(toggle.dataset.target);
+                const isOpen = !target.classList.contains('hidden');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                
+                document.querySelectorAll('.faq-toggle i').forEach(icon => {
+                    icon.classList.remove('rotate-180');
+                });
+                
+                // If it wasn't open before, open it
+                if (!isOpen) {
+                    target.classList.remove('hidden');
+                    toggle.querySelector('i').classList.add('rotate-180');
+                }
+            });
+        });
+        
+        // Wallet connection modal
+        document.getElementById('connectWalletBtn').addEventListener('click', () => {
+            document.getElementById('walletModal').classList.remove('hidden');
+        });
+        
+        document.getElementById('connectWalletBtn2').addEventListener('click', () => {
+            document.getElementById('walletModal').classList.remove('hidden');
+        });
+        
+        document.getElementById('closeWalletModal').addEventListener('click', () => {
+            document.getElementById('walletModal').classList.add('hidden');
+        });
+        
+        // IDO modal
+        document.getElementById('joinIDOBtn').addEventListener('click', () => {
+            document.getElementById('idoModal').classList.remove('hidden');
+        });
+        
+        document.getElementById('closeIdoModal').addEventListener('click', () => {
+            document.getElementById('idoModal').classList.add('hidden');
+        });
+        
+        // IDO form submission
+        document.getElementById('idoForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            document.getElementById('idoModal').classList.add('hidden');
+            alert('Thank you for your application! We will review your submission and contact you soon.');
+        });
+        
+        // Initialize Alchemy for Web3 functionality
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // Initialize Alchemy SDK (with fallback if not loaded)
+                if (typeof AlchemyProvider !== 'undefined') {
+                    const settings = {
+                        apiKey: "demo", // Replace with your API key for production
+                        network: "base-mainnet", // Base network
+                    };
+                    window.alchemy = new Alchemy(settings);
+                    console.log("Alchemy SDK initialized");
+                }
+            } catch (error) {
+                console.error("Error initializing Alchemy:", error);
+            }
+        });
+    </script>
+</body>
+</html>
