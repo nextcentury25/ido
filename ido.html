@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Century - AI Real Estate Agents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        accent: '#00B2FF',
+                        dark: '#181818',
+                        'dark-lighter': '#222222'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #181818;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .glow {
+            text-shadow: 0 0 15px #5D5CDE80;
+        }
+        
+        .grid-background {
+            background-image: 
+                linear-gradient(rgba(93, 92, 222, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(93, 92, 222, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 40px 40px;
+            }
+        }
+        
+        .city-skyline {
+            position: relative;
+            height: 100px;
+            width: 100%;
+            margin-top: 2rem;
+        }
+        
+        .building {
+            position: absolute;
+            bottom: 0;
+            background-color: #222;
+            width: 30px;
+            border-radius: 2px 2px 0 0;
+        }
+        
+        .building::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                rgba(0, 178, 255, 0.1),
+                rgba(0, 178, 255, 0)
+            );
+        }
+
+        .glowing-border {
+            position: relative;
+        }
+        
+        .glowing-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #5D5CDE, #00B2FF);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .glowing-border:hover::before {
+            opacity: 1;
+        }
+        
+        /* Form input glow effect */
+        .input-glow {
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .input-glow:focus {
+            box-shadow: 0 0 15px rgba(93, 92, 222, 0.5);
+        }
+        
+        /* Detect dark mode preference */
+        @media (prefers-color-scheme: dark) {
+            html {
+                color-scheme: dark;
+            }
+        }
+        
+        /* Smart grid visualization */
+        .grid-point {
+            width: 2px;
+            height: 2px;
+            background-color: rgba(93, 92, 222, 0.5);
+            position: absolute;
+            border-radius: 50%;
+            animation: movePoint 15s linear infinite;
+            box-shadow: 0 0 4px rgba(93, 92, 222, 0.8);
+        }
+        
+        @keyframes movePoint {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: var(--transform-end, translate(40vmin, 40vmin));
+                opacity: 0;
+            }
+        }
+        
+        @keyframes floatGlow {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(-10vw, -5vh) scale(1.2);
+            }
+            100% {
+                transform: translate(5vw, -15vh) scale(1);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen relative">
+    <!-- Grid background -->
+    <div class="grid-background fixed inset-0 opacity-30"></div>
+    
+    <!-- Ambient glow effects -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute -left-10 -top-10 w-96 h-96 bg-primary/10 rounded-full filter blur-3xl animate-pulse-slow"></div>
+        <div class="absolute right-0 bottom-0 w-80 h-80 bg-accent/10 rounded-full filter blur-3xl" style="animation: floatGlow 15s ease-in-out infinite alternate;"></div>
+    </div>
+    
+    <!-- Dynamic grid points -->
+    <div id="grid-points" class="fixed inset-0 pointer-events-none"></div>
+    
+    <main class="relative min-h-screen flex flex-col justify-center items-center px-6 py-12 max-w-7xl mx-auto">
+        <!-- Logo/Header -->
+        <div class="mb-12 mt-8 relative">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent rounded-lg blur opacity-30"></div>
+            <div class="relative px-6 py-3 bg-dark-lighter rounded-lg">
+                <span class="text-3xl sm:text-4xl font-bold tracking-tighter">Next<span class="text-primary">Century</span></span>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="text-center max-w-3xl mb-12">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 glow">
+                The Future of Real Estate
+            </h1>
+            <p class="text-xl sm:text-2xl font-light mb-8 text-gray-300">
+                Highest profits in real estate sales from <span class="text-accent font-medium">AI agents</span>
+            </p>
+            <div class="w-24 h-1 bg-primary mx-auto mb-8 rounded-full"></div>
+            <p class="text-gray-400 text-lg mb-8">
+                Experience tomorrow's real estate marketplace today. Revolutionizing property sales through advanced artificial intelligence.
+            </p>
+            
+            <!-- City Skyline Visualization -->
+            <div class="city-skyline mb-12"></div>
+            
+            <!-- Coming Soon Section -->
+            <div class="mb-12">
+                <span class="px-4 py-1 rounded-full bg-primary/20 text-primary text-sm font-medium">COMING SOON</span>
+                <p class="mt-4 text-gray-300">Stay updated on our launch</p>
+            </div>
+            
+            <!-- Email Signup -->
+            <form class="max-w-md mx-auto mb-12">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="Enter your email" 
+                        class="input-glow flex-1 px-4 py-3 rounded-lg bg-dark-lighter border border-gray-700 text-white focus:outline-none focus:border-primary text-base"
+                        required>
+                    <button type="submit" 
+                        class="glowing-border px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg transition duration-300 font-medium">
+                        Notify Me
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Features Preview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
+            <div class="bg-dark-lighter p-6 rounded-xl border border-gray-800 hover:border-primary/50 transition duration-300">
+                <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-primary to-accent mb-4 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">AI-Driven Matching</h3>
+                <p class="text-gray-400">Smart algorithms that connect the right properties with the perfect buyers.</p>
+            </div>
+            
+            <div class="bg-dark-lighter p-6 rounded-xl border border-gray-800 hover:border-primary/50 transition duration-300">
+                <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-primary to-accent mb-4 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Maximum ROI</h3>
+                <p class="text-gray-400">Optimized pricing strategies that ensure the highest returns on your property investments.</p>
+            </div>
+            
+            <div class="bg-dark-lighter p-6 rounded-xl border border-gray-800 hover:border-primary/50 transition duration-300">
+                <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-primary to-accent mb-4 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">24/7 Virtual Agents</h3>
+                <p class="text-gray-400">AI agents that never sleep, ensuring your properties are always being marketed effectively.</p>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="mt-auto py-6 px-6 text-center text-gray-500 text-sm">
+        <p>© 2023 Next Century. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Create animated city skyline
+        document.addEventListener('DOMContentLoaded', () => {
+            const skyline = document.querySelector('.city-skyline');
+            const numBuildings = 20;
+            const containerWidth = skyline.clientWidth;
+            
+            for (let i = 0; i < numBuildings; i++) {
+                const building = document.createElement('div');
+                building.classList.add('building');
+                
+                // Random building properties
+                const height = Math.random() * 80 + 20; // 20-100px
+                const width = Math.random() * 20 + 10; // 10-30px
+                const left = (i / numBuildings) * containerWidth;
+                
+                building.style.height = `${height}px`;
+                building.style.width = `${width}px`;
+                building.style.left = `${left}px`;
+                building.style.opacity = `${0.4 + Math.random() * 0.6}`; // 0.4-1.0
+                
+                // Add windows
+                const windows = Math.floor(height / 10);
+                for (let j = 0; j < windows; j++) {
+                    if (Math.random() > 0.3) { // 70% chance of window
+                        const window = document.createElement('div');
+                        window.style.position = 'absolute';
+                        window.style.width = '2px';
+                        window.style.height = '2px';
+                        window.style.backgroundColor = '#00B2FF';
+                        window.style.opacity = Math.random() > 0.5 ? '1' : '0.5';
+                        window.style.left = `${Math.random() * (width - 4) + 2}px`;
+                        window.style.bottom = `${j * 10 + 5}px`;
+                        window.style.boxShadow = '0 0 5px #00B2FF';
+                        building.appendChild(window);
+                    }
+                }
+                
+                skyline.appendChild(building);
+            }
+            
+            // Create grid points animation
+            const gridContainer = document.getElementById('grid-points');
+            const numPoints = 100;
+            
+            for (let i = 0; i < numPoints; i++) {
+                const point = document.createElement('div');
+                point.classList.add('grid-point');
+                
+                // Random position
+                point.style.left = `${Math.random() * 100}vw`;
+                point.style.top = `${Math.random() * 100}vh`;
+                
+                // Random animation delay
+                point.style.animationDelay = `${Math.random() * 8}s`;
+                
+                // Random animation direction
+                const angle = Math.random() * 360;
+                const distance = 20 + Math.random() * 60; // Move 20-80vmin
+                const transformEnd = `translate(${Math.cos(angle * Math.PI / 180) * distance}vmin, ${Math.sin(angle * Math.PI / 180) * distance}vmin)`;
+                point.style.setProperty('--transform-end', transformEnd);
+                
+                // Random size
+                const size = 1 + Math.random() * 2;
+                point.style.width = `${size}px`;
+                point.style.height = `${size}px`;
+                
+                // Random glow intensity
+                const glowSize = 2 + Math.random() * 5;
+                point.style.boxShadow = `0 0 ${glowSize}px rgba(93, 92, 222, ${0.3 + Math.random() * 0.5})`;
+                
+                gridContainer.appendChild(point);
+            }
+        });
+        
+        // Check for dark mode preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+    </script>
+</body>
+</html>
